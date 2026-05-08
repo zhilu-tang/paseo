@@ -1042,6 +1042,7 @@ export class VoiceAssistantWebSocketServer {
       existing.sockets.add(ws);
       this.sessions.set(ws, existing);
       this.sendToClient(ws, this.createServerInfoMessage());
+      existing.session.sendInitialState();
       existing.connectionLogger.trace(
         {
           clientId,
@@ -1065,6 +1066,7 @@ export class VoiceAssistantWebSocketServer {
     this.sessions.set(ws, connection);
     this.externalSessionsByKey.set(clientId, connection);
     this.sendToClient(ws, this.createServerInfoMessage());
+    connection.session.sendInitialState();
     connection.connectionLogger.trace(
       {
         clientId,
